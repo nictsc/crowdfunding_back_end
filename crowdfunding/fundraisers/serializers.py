@@ -13,3 +13,10 @@ class PledgeSerializer(serializers.ModelSerializer):
     class Meta:
        model = apps.get_model('fundraisers.Pledge')
        fields = '__all__'
+
+# Add the nested serializer
+class FundraiserDetailSerializer(FundraiserSerializer):
+  pledges = PledgeSerializer(many=True, read_only=True) #serialize all the records, the end user can only read the end point.
+  class Meta:
+       model = apps.get_model('fundraisers.Fundraiser')
+       fields = '__all__'
