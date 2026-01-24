@@ -8,8 +8,7 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from .models import Fundraiser # from this models.py file, import this class called Fundraiser
 from .models import Pledge
-from .serializers import FundraiserSerializer # from the serializer file, import this class called FundraiserSerializer
-from .serializers import PledgeSerializer
+from .serializers import FundraiserSerializer, PledgeSerializer, FundraiserDetailSerializer
 
 class FundraiserList(APIView):
 
@@ -35,7 +34,7 @@ class FundraiserList(APIView):
 class FundraiserDetail(APIView): ## give me back a single fundraiser
     def get(self, request, pk):
         fundraiser = get_object_or_404(Fundraiser, pk=pk) ## helper function get_object_or_404
-        serializer = FundraiserSerializer(fundraiser)
+        serializer = FundraiserDetailSerializer(fundraiser) ## Add the nested serializer
         return Response(serializer.data)
     
 class PledgesList(APIView):
