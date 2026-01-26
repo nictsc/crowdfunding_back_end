@@ -38,15 +38,16 @@ Prerequisite - Succuessful authenticiation
 
 ### API Spec
 
-| URL | HTTP Method | Purpose | Request Body | Success Response Code | Authentication/Authorisation |
-| /api/signup | POST | Create a account | first name, last name, email, password | 201 Created | none |
-| /api/login | POST | Log user | email, password | 200 OK | none |
-| /api/users | PATCH | Update an account | first name, last name, email, password | 204 No Content | authenticated user |
-| /api/fundraisers | GET | View all fundraisers | ID, title, description, target goal, amount raised | 200 OK | none |
-| /api/fundraisers/{id} | GET | View a fundraiser | ID, title, description, target goal, amount raised | 200 OK | none |
-| /api/fundraisers | POST | Create a fundraiser | ID, title, description, target goal | 201 Created | authenticated user |
-| /api/fundraisers | PATCH | Update a fundraiser | ID, title, description, target goal | 204 No Content | authenticated user |
-| /api/fundraisers | Delete | Delete a fundraiser | ID, title, description, target goal | 204 No Content | authenticated user |
-| /api/fundraisers/{id}/pledge| POST | Create a pledge | amount, created time/date | 201 Created | authenticated user |
+| URL                          | HTTP Method | Purpose              | Request Body                                   | Success Response Code | Authentication/Authorisation |
+|------------------------------|-------------|----------------------|------------------------------------------------|-----------------------|------------------------------|
+| /api/signup                  | POST        | Create a account     | first name, last name, email, password         | 201 Created           | none                         |
+| /api/login                   | POST        | Authenticate User    | email, password                                | 200 OK                | none                         |
+| /api/users                   | PATCH       | Update an account    | first name, last name, email, password         | 204 No Content        | authenticated user           |
+| /api/fundraisers             | GET         | View all fundraisers | title, description, target goal, amount raised | 200 OK                | none                         |
+| /api/fundraisers/{id}        | GET         | View a fundraiser    | title, description, target goal, amount raised | 200 OK                | none                         |
+| /api/fundraisers             | POST        | Create a fundraiser  | title, description, target goal                | 201 Created           | authenticated user           |
+| /api/fundraisers             | PATCH       | Update a fundraiser  | title, description, target goal,               | 204 No Content        | authenticated user           |
+| /api/fundraisers             | Delete      | Delete a fundraiser  | title, description, target goal                | 204 No Content        | authenticated user           |
+| /api/fundraisers/{id}/pledge | Post        | Create a pledge      | amount, created date                           | 201 Created           | authenticated user           |
 
 ### DB Schema
