@@ -20,7 +20,7 @@ class FundraiserList(APIView):
    def post(self, request):
        serializer = FundraiserSerializer(data=request.data) ## to serialise as json
        if serializer.is_valid(): ## built in function is_valid - valid as json format
-           serializer.save() ## call another function to save the data
+           serializer.save(owner=request.user) ## call another function to save the data
            return Response(
                serializer.data,
                status=status.HTTP_201_CREATED
@@ -47,7 +47,7 @@ class PledgesList(APIView):
    def post(self, request):
        serializer = PledgeSerializer(data=request.data) ## to serialise as json
        if serializer.is_valid(): ## built in function is_valid - valid as json format
-           serializer.save() ## call another function to save the data
+           serializer.save(supporter=request.user) ## call another function to save the data
            return Response(
                serializer.data,
                status=status.HTTP_201_CREATED
