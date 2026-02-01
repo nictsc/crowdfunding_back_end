@@ -108,4 +108,4 @@ Account Admin Page
 | /api/fundraisers/{id}/pledge | Post        | Create a pledge      | first name, last name, amount                  | 201 Created           | authenticated user           |
 
 ### Database Schema
-![Database Schemas](.media/database_schemas.png)
+![Database Schemas](./media/database_schemas.png)
