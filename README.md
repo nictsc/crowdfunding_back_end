@@ -13,13 +13,15 @@ Crowds of Catan is a crowdfunding platform the Catanians (Catan Community) can p
     - Their main goal is to create fundraisers to support their in-game ambitions and view their resource goals.
 - Catan game developers 
     - Authenticated users.
-    - They have the ability to create, upate and delete their fundraisers.
+    - They have the ability to create, update and delete their fundraisers.
     - Their main goal is to create fundraisers to support their creative expansions, custom maps or rule variations and view their resource goals.
 - Catan supporters 
     - Authenticated users. 
+    - They have the ability to create pledges.
     - Their main goal is to support fundraisers by pledging their resources.
 - Catan visitors are 
     - Unauthenticated users.
+    - They have the ability to view fundraisers and pledges.
     - Their main goal is to view the fundraisers as a whole and in detail.
 
 ### Front End Pages/Functionality
@@ -97,15 +99,15 @@ Account Admin Page
 
 | URL                          | HTTP Method | Purpose              | Request Body                                   | Success Response Code | Authentication/Authorisation |
 |------------------------------|-------------|----------------------|------------------------------------------------|-----------------------|------------------------------|
-| /api/signup                  | POST        | Create an account    | first name, last name, email, password         | 201 Created           | none                         |
-| /api/login                   | POST        | Authenticate User    | email, password                                | 200 OK                | none                         |
-| /api/users                   | PATCH       | Update an account    | first name, last name, email, password         | 204 No Content        | authenticated user           |
-| /api/fundraisers             | GET         | View all fundraisers | title, description, target goal, amount raised | 200 OK                | none                         |
-| /api/fundraisers/{id}        | GET         | View a fundraiser    | title, description, target goal, amount raised | 200 OK                | none                         |
-| /api/fundraisers             | POST        | Create a fundraiser  | title, description, target goal                | 201 Created           | authenticated user           |
-| /api/fundraisers/{id}        | PATCH       | Update a fundraiser  | title, description, target goal                | 204 No Content        | authenticated user           |
-| /api/fundraisers/{id}        | DELETE      | Delete a fundraiser  |                                                | 204 No Content        | authenticated user           |
-| /api/fundraisers/{id}/pledge | Post        | Create a pledge      | first name, last name, amount                  | 201 Created           | authenticated user           |
+| /signup                      | POST        | Create an account    | first name, last name, email, password         | 201 Created           | none                         |
+| /login                       | POST        | Authenticate User    | email, password                                | 200 OK                | none                         |
+| /users                       | PATCH       | Update an account    | first name, last name, email, password         | 204 No Content        | authenticated user           |
+| /fundraisers                 | GET         | View all fundraisers | title, description, target goal, amount raised | 200 OK                | none                         |
+| /fundraisers/{id}            | GET         | View a fundraiser    | title, description, target goal, amount raised | 200 OK                | none                         |
+| /fundraisers                 | POST        | Create a fundraiser  | title, description, target goal                | 201 Created           | authenticated user           |
+| /fundraisers/{id}            | PATCH       | Update a fundraiser  | title, description, target goal                | 204 No Content        | authenticated user           |
+| /fundraisers/{id}            | DELETE      | Delete a fundraiser  |                                                | 204 No Content        | authenticated user           |
+| /fundraisers/{id}/pledge     | POST        | Create a pledge      | first name, last name, amount                  | 201 Created           | authenticated user           |
 
 ### Database Schema
 ![Database Schemas](./media/database_schemas.png)
