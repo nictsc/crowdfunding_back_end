@@ -9,17 +9,19 @@ class Fundraiser(models.Model): # inheriting the Django Model from models and ca
     goal = models.IntegerField()
     image = models.URLField()
     is_open = models.BooleanField()
+    is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(
         get_user_model(), # This will find the user model in settings; so that we use it a single time.
         on_delete=models.CASCADE, #when an owner is deleted, the fundraisers created by this owner will be created.
         related_name='owned_fundraisers'
     )
-
+1
 class Pledge(models.Model):
     amount = models.IntegerField()
     comment = models.CharField(max_length=200)
     anonymous = models.BooleanField()
+    is_deleted = models.BooleanField(default=False)
     fundraiser = models.ForeignKey(
         'Fundraiser', ## table to be linked 
         on_delete=models.CASCADE, ## delete the fundraiser means to also delete the related pledges

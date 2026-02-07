@@ -6,13 +6,13 @@ class FundraiserSerializer(serializers.ModelSerializer):
    owner = serializers.ReadOnlyField(source='owner.id') ## treat it as read only attribute and assign it to the owner.
    class Meta:
        model = apps.get_model('fundraisers.Fundraiser')
-       fields = '__all__'
+       exclude = ('is_deleted',)
 
 class PledgeSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.id')
     class Meta:
        model = apps.get_model('fundraisers.Pledge')
-       fields = '__all__'
+       exclude = ('is_deleted',)
 
 # Add the nested serializer
 class FundraiserDetailSerializer(FundraiserSerializer):
@@ -28,3 +28,6 @@ class FundraiserDetailSerializer(FundraiserSerializer):
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
+    
+    def delete(self, instance, validated_data):
+        instance.is_deleted = validated_data.get('is_deleted', instance.is_deleted)
