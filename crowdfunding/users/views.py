@@ -5,7 +5,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from .models import CustomUser
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer, CustomUserDetailSerializer
 
 class CustomUserList(APIView):
     def get(self,request):
@@ -28,10 +28,38 @@ class CustomUserList(APIView):
     
 class CustomUserDetail(APIView):
     def get(self, request, pk): ## the primary key (pk) is the ID ... /users/1
-        user = get_object_or_404(CustomUser,pk) 
+        ## print(CustomUser.objects.filter(id=pk))
+        user = get_object_or_404(CustomUser,pk=pk)
+        ## print(user)
         serializer = CustomUserSerializer(user) #serialize data for sending to APi
         return Response(serializer.data)
 
+    ## put response is placed in customuserdetail class because it needs to refer to a specific user
+    ## primary key (pk) needs to be specified to update the required user
+    ## Full update
+    def put(self, request, pk): 
+        user = get_object_or_404(CustomUser, pk=pk)
+
+        ## trigger the auth check to see if the end user is the owner of the fundriaser
+        self.check_object_permissions(request, user) 
+
+        serializer = CustomUserDetailSerializer(
+            instance=user,
+            data=request.data,
+            ## special Django option; this allows for some fields to be updated
+            partial=True 
+        )
+
+        ## checking if the serializer is valid
+        if serializer.is_valid():
+            serializer.save()
+            ## on success, return the response
+            return Response(serializer.data)
+        ## on failure, return error 400
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(

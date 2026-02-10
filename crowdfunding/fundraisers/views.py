@@ -56,6 +56,7 @@ class FundraiserDetail(APIView):
     
     ## put response is placed in fundraiaserdetail class because it needs to refer to a specific fundraiser
     ## primary key (pk) needs to be specified to update the required fundraiser
+    ## Full update
     def put(self, request, pk): 
         fundraiser = get_object_or_404(Fundraiser, pk=pk)
 
