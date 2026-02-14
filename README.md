@@ -1,6 +1,7 @@
 # crowdfunding_back_end
 
 Nicole Chan
+Heroku Project URL at [here](https://crowdfunding-backend-830cb204fd8e.herokuapp.com)
 
 ## Planning
 ### Concept / Name
@@ -97,17 +98,26 @@ Account Admin Page
 
 ### API Spec
 
-| URL                          | HTTP Method | Purpose              | Request Body                                   | Success Response Code | Authentication/Authorisation |
-|------------------------------|-------------|----------------------|------------------------------------------------|-----------------------|------------------------------|
-| /signup                      | POST        | Create an account    | first name, last name, email, password         | 201 Created           | none                         |
-| /login                       | POST        | Authenticate User    | email, password                                | 200 OK                | none                         |
-| /users                       | PATCH       | Update an account    | first name, last name, email, password         | 204 No Content        | authenticated user           |
-| /fundraisers                 | GET         | View all fundraisers | title, description, target goal, amount raised | 200 OK                | none                         |
-| /fundraisers/{id}            | GET         | View a fundraiser    | title, description, target goal, amount raised | 200 OK                | none                         |
-| /fundraisers                 | POST        | Create a fundraiser  | title, description, target goal                | 201 Created           | authenticated user           |
-| /fundraisers/{id}            | PATCH       | Update a fundraiser  | title, description, target goal                | 204 No Content        | authenticated user           |
-| /fundraisers/{id}            | DELETE      | Delete a fundraiser  |                                                | 204 No Content        | authenticated user           |
-| /fundraisers/{id}/pledge     | POST        | Create a pledge      | first name, last name, amount                  | 201 Created           | authenticated user           |
+| URL                      | HTTP Method | Purpose              | Request Body                                     | Response                                                                   | Success Response Code | Authentication/Authorisation |
+|--------------------------|-------------|----------------------|--------------------------------------------------|----------------------------------------------------------------------------|-----------------------|------------------------------|
+| /users                   | POST        | Create an account    | username, first name, last name, email, password | id, last_login, is_superuser, username, first_name, last_name, email       | 201 Created           | none                         |
+| /api-token-auth/         | POST        | Authenticate User    | username, password                               | token, user_id, email                                                      | 200 OK                | none                         |
+| /users/                  | GET         | View all users       |                                                  | id, last_login, is_superuser, username, first_name, last_name, email       | 200 OK                | none                         |
+| /users/{id}              | GET         | View an user         |                                                  | id, last_login, is_superuser, username, first_name, last_name, email       | 200 OK                | none                         |
+| /fundraisers             | GET         | View all fundraisers |                                                  | id, owner, title, description, goal, image, is_open, date_created          | 200 OK                | none                         |
+| /fundraisers/{id}        | GET         | View a fundraiser    |                                                  | id, owner, pledges, title, description, goal, image, is_open, date_created | 200 OK                | none                         |
+| /fundraisers             | POST        | Create a fundraiser  | title, description, goal, image, is_open         | id, owner, title, description, goal, image, is_open, date_created          | 201 Created           | authenticated user           |
+| /fundraisers/{id}        | PUT         | Update a fundraiser  | title, description, goal, image, is_open         | id, owner, pledges, title, description, goal, image, is_open, date_created | 204 No Content        | authenticated user           |
+| /fundraisers/{id}        | DELETE      | Delete a fundraiser  |                                                  |                                                                            | 204 No Content        | authenticated user           |
+| /pledges/                | GET         | View all pledges     |                                                  | id, supporter, amount, comment, anonymous, fundraiser                      | 200 OK                | none                         |
+| /pledges/{id}            | GET         | View a pledge        |                                                  | id, supporter, amount, comment, anonymous, fundraiser                      | 200 OK                | none                         |
+| /fundraisers/{id}/pledge | POST        | Create a pledge      | amount, comment, anonymous, fundraiser           | id, supporter, amount, comment, anonymous, fundraiser                      | 201 Created           | authenticated user           |
 
 ### Database Schema
 ![Database Schemas](./media/database_schemas.png)
+
+### API screenshots
+![Get Request](./media/Prod_GET_All_Users.png)
+![Post Request](.media/Prod_POST_A_Fundraiser.png)
+![Token Return](/media/Prod_POST_A_Token.png)
+
