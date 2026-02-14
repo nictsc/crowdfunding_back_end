@@ -118,6 +118,8 @@ Account Admin Page
 
 ### API screenshots
 ![Get Request](./media/Prod_GET_All_Users.png)
+
 ![Post Request](.media/Prod_POST_A_Fundraiser.png)
-![Token Return](/media/Prod_POST_A_Token.png)
+
+![Token Return](./media/Prod_POST_A_Token.png)
 
