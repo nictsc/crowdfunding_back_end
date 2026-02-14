@@ -1,7 +1,6 @@
 # crowdfunding_back_end
 
 Nicole Chan
-Heroku Project URL at [here](https://crowdfunding-backend-830cb204fd8e.herokuapp.com)
 
 ## Planning
 ### Concept / Name
