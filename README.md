@@ -117,9 +117,13 @@ Account Admin Page
 ![Database Schemas](./media/database_schemas.png)
 
 ### API screenshots
+
+Get Request
 ![Get Request](./media/Prod_GET_All_Users.png)
 
-![Post Request](.media/Prod_POST_A_Fundraiser.png)
+Post Request
+![Post Request](./media/Prod_POST_A_Fundraiser.png)
 
+Token Return
 ![Token Return](./media/Prod_POST_A_Token.png)
 
