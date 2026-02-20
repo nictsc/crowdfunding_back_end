@@ -16,7 +16,7 @@ class Fundraiser(models.Model): # inheriting the Django Model from models and ca
         on_delete=models.CASCADE, #when an owner is deleted, the fundraisers created by this owner will be created.
         related_name='owned_fundraisers'
     )
-1
+
 class Pledge(models.Model):
     amount = models.IntegerField()
     comment = models.CharField(max_length=200)
