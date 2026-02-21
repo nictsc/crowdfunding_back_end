@@ -1,13 +1,20 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.generics import get_object_or_404
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from .models import CustomUser
 from .serializers import CustomUserSerializer, CustomUserDetailSerializer
+from .permissions import IsSelfOrReadOnly
 
 class CustomUserList(APIView):
+    ## for unsafe methods (post, patch, delete), they need to be authenticated. Otherwise, they only get access to GET requests
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsSelfOrReadOnly
+    ]
+
     def get(self,request):
         users = CustomUser.objects.all()
         serializer = CustomUserSerializer(users, many=True)
@@ -21,12 +28,17 @@ class CustomUserList(APIView):
                 serializer.data, ## password is automatically taken out before reaching the API
                 status=status.HTTP_201_CREATED
             )
+        ## if response is invalid, return error 400
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
     
 class CustomUserDetail(APIView):
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsSelfOrReadOnly
+    ]
     def get(self, request, pk): ## the primary key (pk) is the ID ... /users/1
         ## print(CustomUser.objects.filter(id=pk))
         user = get_object_or_404(CustomUser,pk=pk)
