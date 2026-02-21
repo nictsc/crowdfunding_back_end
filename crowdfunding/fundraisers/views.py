@@ -17,29 +17,29 @@ class FundraiserList(APIView):
     ] 
 
     def get(self, request):
-       ## show all the non soft-deleted fundraisers
-       fundraisers = Fundraiser.objects.filter(is_deleted=False)
-       serializer = FundraiserSerializer(fundraisers, many=True)
-       return Response(serializer.data)
-   
+        ## show all the non soft-deleted fundraisers
+        fundraisers = Fundraiser.objects.filter(is_deleted=False)
+        serializer = FundraiserSerializer(fundraisers, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
-       ## to serialise as json
-       serializer = FundraiserSerializer(data=request.data) 
-       ## built in function is_valid - valid as json format
-       if serializer.is_valid(): 
-           ## call another function to save the data
-           serializer.save(owner=request.user) 
-           return Response(
-               serializer.data,
-               status=status.HTTP_201_CREATED
-           )
-       ## if response is invalid, return error 400
-       return Response( 
-           serializer.errors,
-           status=status.HTTP_400_BAD_REQUEST
-       )
-    
-   
+        ## to serialise as json
+        serializer = FundraiserSerializer(data=request.data) 
+        ## built in function is_valid - valid as json format
+        if serializer.is_valid(): 
+            ## call another function to save the data
+            serializer.save(owner=request.user) 
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        ## if response is invalid, return error 400
+        return Response( 
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
 ## show one fundraiser
 class FundraiserDetail(APIView): 
     permission_classes = [
@@ -106,27 +106,26 @@ class PledgesList(APIView):
     ]
 
     def get(self, request):
-       ## show all the non soft-deleted pledges
-       pledges = Pledge.objects.filter(is_deleted=False)
-       serializer = PledgeSerializer(pledges, many=True)
-       return Response(serializer.data)
-   
-    def post(self, request):
-       ## to serialise as json
-       serializer = PledgeSerializer(data=request.data) 
-       ## built in function is_valid - valid as json format
-       if serializer.is_valid(): 
-           ## call another function to save the data
-           serializer.save(supporter=request.user) 
-           return Response(
-               serializer.data,
-               status=status.HTTP_201_CREATED
+        ## show all the non soft-deleted pledges
+        pledges = Pledge.objects.filter(is_deleted=False)
+        serializer = PledgeSerializer(pledges, many=True)
+        return Response(serializer.data)
 
-           )
-       return Response(
-           serializer.errors,
-           status=status.HTTP_400_BAD_REQUEST
-       )
+    def post(self, request):
+        ## to serialise as json
+        serializer = PledgeSerializer(data=request.data) 
+        ## built in function is_valid - valid as json format
+        if serializer.is_valid(): 
+            ## call another function to save the data
+            serializer.save(supporter=request.user) 
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 ## show one pledge   
 class PledgeDetail(APIView): 
     permission_classes = [

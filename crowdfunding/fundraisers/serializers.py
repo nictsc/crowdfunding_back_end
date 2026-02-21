@@ -3,22 +3,22 @@ from rest_framework import serializers
 from django.apps import apps
 
 class FundraiserSerializer(serializers.ModelSerializer):
-   
-   ## treat it as read only attribute and assign it to the owner.
-   owner = serializers.ReadOnlyField(source='owner.id') 
-   class Meta:
-       ## grab the fundraiser model
-       model = apps.get_model('fundraisers.Fundraiser')
-       ## show all fields except for the "is_deleted" attribute
-       exclude = ('is_deleted',)
+
+    ## treat it as read only attribute and assign it to the owner.
+    owner = serializers.ReadOnlyField(source='owner.id') 
+    class Meta:
+        ## grab the fundraiser model
+        model = apps.get_model('fundraisers.Fundraiser')
+        ## show all fields except for the "is_deleted" attribute
+        exclude = ('is_deleted',)
 
 class PledgeSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.id')
     class Meta:
-       ## grab the pledge model
-       model = apps.get_model('fundraisers.Pledge')
-       ## show all fields except for the "is_deleted" attribute
-       exclude = ('is_deleted',)
+        ## grab the pledge model
+        model = apps.get_model('fundraisers.Pledge')
+        ## show all fields except for the "is_deleted" attribute
+        exclude = ('is_deleted',)
 
 # Add the nested serializer
 class FundraiserDetailSerializer(FundraiserSerializer):
