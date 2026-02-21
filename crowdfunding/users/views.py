@@ -10,10 +10,7 @@ from .permissions import IsSelfOrReadOnly
 
 class CustomUserList(APIView):
     ## for unsafe methods (post, patch, delete), they need to be authenticated. Otherwise, they only get access to GET requests
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
-        IsSelfOrReadOnly
-    ]
+  
 
     def get(self,request):
         users = CustomUser.objects.all()
