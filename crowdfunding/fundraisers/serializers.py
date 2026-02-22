@@ -10,7 +10,7 @@ class FundraiserSerializer(serializers.ModelSerializer):
         ## grab the fundraiser model
         model = apps.get_model('fundraisers.Fundraiser')
         ## show all fields except for the "is_deleted" attribute
-        exclude = ('is_deleted',)
+        exclude = ('is_deleted','date_created',)
 
 class PledgeSerializer(serializers.ModelSerializer):
     supporter = serializers.ReadOnlyField(source='supporter.id')
