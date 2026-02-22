@@ -6,14 +6,15 @@ from rest_framework.generics import get_object_or_404
 ## import Fundraiser and Pledge models from models.py file
 from .models import Fundraiser, Pledge
 from .serializers import FundraiserSerializer, PledgeSerializer, FundraiserDetailSerializer
-from .permissions import IsOwnerOrReadOnly, IsFundraiserSoftDeleted
+from .permissions import IsOwnerOrReadOnly, IsFundraiserSoftDeleted, IsEndUserActiveAndNotSoftDeleted
 
 ## Create your views here
 class FundraiserList(APIView):
     ## for unsafe methods (post, patch, delete), they need to be authenticated. Otherwise, they only get access to GET requests
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsOwnerOrReadOnly
+        IsOwnerOrReadOnly,
+        IsEndUserActiveAndNotSoftDeleted
     ] 
 
     def get(self, request):
@@ -44,7 +45,8 @@ class FundraiserList(APIView):
 class FundraiserDetail(APIView): 
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsOwnerOrReadOnly
+        IsOwnerOrReadOnly,
+        IsEndUserActiveAndNotSoftDeleted
     ] 
     
     def get(self, request, pk):
@@ -54,9 +56,11 @@ class FundraiserDetail(APIView):
         serializer = FundraiserDetailSerializer(fundraiser) 
         return Response(serializer.data)
     
-    ## put response is placed in fundraiaserdetail class because it needs to refer to a specific fundraiser
-    ## primary key (pk) needs to be specified to update the required fundraiser
-    ## Full update
+    '''
+    put response is placed in FundraiaserDetail class because it needs to refer to a specific fundraiser
+    primary key (pk) needs to be specified to update the required fundraiser
+    full update
+    '''
     def put(self, request, pk): 
         fundraiser = get_object_or_404(Fundraiser, pk=pk)
 
@@ -102,6 +106,7 @@ class FundraiserDetail(APIView):
 class PledgesList(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
+        IsEndUserActiveAndNotSoftDeleted,
         IsFundraiserSoftDeleted
     ]
 
@@ -130,6 +135,7 @@ class PledgesList(APIView):
 class PledgeDetail(APIView): 
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
+        IsEndUserActiveAndNotSoftDeleted,
         IsOwnerOrReadOnly
     ] 
     

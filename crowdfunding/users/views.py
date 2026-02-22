@@ -5,13 +5,14 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from .models import CustomUser
+## import Fundraiser and Pledge models from the Fundraisers.models.py file
+from fundraisers.models import Fundraiser, Pledge
 from .serializers import CustomUserSerializer, CustomUserDetailSerializer
 from .permissions import IsSelfOrReadOnly
+from django.db import transaction
 
 class CustomUserList(APIView):
-    ## for unsafe methods (post, patch, delete), they need to be authenticated. Otherwise, they only get access to GET requests
   
-
     def get(self,request):
         users = CustomUser.objects.all()
         serializer = CustomUserSerializer(users, many=True)
@@ -49,7 +50,7 @@ class CustomUserDetail(APIView):
     def put(self, request, pk): 
         user = get_object_or_404(CustomUser, pk=pk)
 
-        ## trigger the auth check to see if the end user is the owner of the fundriaser
+        ## trigger the auth check to see if the end user is the owner of the user account
         self.check_object_permissions(request, user) 
 
         serializer = CustomUserDetailSerializer(
@@ -69,6 +70,39 @@ class CustomUserDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+    
+    def delete (self, request, pk):
+        user = get_object_or_404(CustomUser, pk = pk)
+
+        ## trigger the auth check to see if the end user is the owner of the user account
+        self.check_object_permissions(request, user) 
+
+        ## execute the following all at once
+        with transaction.atomic():
+
+            ## soft delete fundraisers created by user account
+            Fundraiser.objects.filter(
+                owner=user
+                ).update(is_deleted=True)
+
+            ## soft delete corresponding pledges in the previously mentioned fundraisers
+            Pledge.objects.filter(
+                supporter=user,
+                fundraiser__owner=user
+                ).update(is_deleted=True)
+
+            ## anonymise pledges this soon to be soft deleted end user to other fundraisers
+            Pledge.objects.filter(
+                supporter=user
+                ).exclude(
+                fundraiser__owner=user
+                ).update(anonymous=True)
+
+            ## soft delete this end user
+            user.is_deleted = True
+            user.is_active = False
+            user.save()
+
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
