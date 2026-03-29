@@ -27,58 +27,76 @@ Crowds of Catan is a crowdfunding platform the Catanians (Catan Community) can p
 ## Installation
 
 ### Install Python
-For Windows, download the latest version from https://www.python.org/downloads/windows/
-
-To check the current Python version, run this command
-```
-python --version
-```
+For Windows, download the latest version from https://www.python.org/downloads/windows/ <br>
 For Mac, download the latest version from https://www.python.org/downloads/macos/
 
-To check the current Python version, run this command
+
+To check the current Python version
+
 ```
+# Windows Command
+python --version
+
+# Mac command
 python3 --version
 ```
 
 ### Create virtual environment
-For Windows 
-Run this command after navigating to where you want to create your project
+
+Create virtual environment
+
 ```
-python m venv project-name
-```
-For Mac
-Create a new project directory
-Run this command
-```
+# Windows command
+python -m venv venv
+
+# Mac command
 python3 -m venv venv
 ```
+
+Create new project
+
+```
+# Windows command
+python m venv project-name
+# Mac command
+python3 -m venv venv
+```
+
 ### Activate virtual environment
-Jump back to the terminal, make sure you're in the folder that contains your requirements.txt file.
+Ensure you're in the folder that contains your requirements.txt file.
 
-For Windows, run this command.
+In the project folder, use the following commands.
+
 ```
+# Windows command
+. venv/bin/activate
+
+# Mac command
 source venv/bin/activate
 ```
 
-For Mac, run this comman in the project folder.
-```
-source venv/bin/activate
-```
+### Install Django in virtual environment
 
-### Install Django
-For Windows, run this command
 ```
+# Windows command
 python -m pip install Django
-```
 
-For Mac, run this command
-``` 
+# Mac command
 python3 -m pip install django
+```
+### Run local server
+
+``` 
+# Windows command
+python crowdfunding/manage.py runserver
+
+# Mac command
+python3 crowdfunding/manage.py runserver
 ```
 
 ### Deactivate virtual environment
-Run this command
 ```
+# Applies for both Windows and Mac
 deactivate
 ```
 
