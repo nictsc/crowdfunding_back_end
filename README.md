@@ -24,6 +24,64 @@ Crowds of Catan is a crowdfunding platform the Catanians (Catan Community) can p
     - They have the ability to view fundraisers and pledges.
     - Their main goal is to view the fundraisers as a whole and in detail.
 
+## Installation
+
+### Install Python
+For Windows, download the latest version from https://www.python.org/downloads/windows/
+
+To check the current Python version, run this command
+```
+python --version
+```
+For Mac, download the latest version from https://www.python.org/downloads/macos/
+
+To check the current Python version, run this command
+```
+python3 --version
+```
+
+### Create virtual environment
+For Windows 
+Run this command after navigating to where you want to create your project
+```
+python m venv project-name
+```
+For Mac
+Create a new project directory
+Run this command
+```
+python3 -m venv venv
+```
+### Activate virtual environment
+Jump back to the terminal, make sure you're in the folder that contains your requirements.txt file.
+
+For Windows, run this command.
+```
+source venv/bin/activate
+```
+
+For Mac, run this comman in the project folder.
+```
+source venv/bin/activate
+```
+
+### Install Django
+For Windows, run this command
+```
+python -m pip install Django
+```
+
+For Mac, run this command
+``` 
+python3 -m pip install django
+```
+
+### Deactivate virtual environment
+Run this command
+```
+deactivate
+```
+
 ### API Spec
 | URL                      | HTTP Method | Purpose              | Request Body                                     | Response                                                                   | Success Response Code | Authentication/Authorisation |
 |--------------------------|-------------|----------------------|--------------------------------------------------|----------------------------------------------------------------------------|-----------------------|------------------------------|
