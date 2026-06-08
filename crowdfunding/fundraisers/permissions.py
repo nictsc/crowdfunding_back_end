@@ -3,10 +3,12 @@ from .models import Fundraiser
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        ## Allow safe methods (GET, HEAD, OPTIONS)
         if request.method in permissions.SAFE_METHODS:
             return True
-        return obj.owner == request.user ## created custom permission class
+        if request.user.is_staff:
+            return True
+        owner = getattr(obj, 'owner', None) or getattr(obj, 'supporter', None)
+        return owner == request.user
     
 class IsFundraiserSoftDeleted(permissions.BasePermission):
     def has_permission(self, request, view):
