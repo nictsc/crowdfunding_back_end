@@ -146,7 +146,21 @@ class PledgeDetail(APIView):
         return Response(serializer.data)
  
     
-
+    def put(self, request, pk):
+        pledge = get_object_or_404(Pledge, pk=pk, is_deleted=False)
+        self.check_object_permissions(request, pledge)
+        serializer = PledgeSerializer(
+            instance=pledge,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+    )
 
 
 
